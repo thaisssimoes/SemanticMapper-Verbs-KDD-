@@ -10,17 +10,29 @@
 	<name>SemanticMapper-Verbs</name>
 	<url>http://maven.apache.org</url>
 
+
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
 
-<dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.7.0</version>
-</dependency>
+		<dependency>
+		
+		<groupId>org.projectlombok</groupId> 
+		<artifactId>lombok</artifactId> 
+		<version>1.16.16</version> 
+		<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+		
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>3.7.0</version>
+		</dependency>
 		<dependency>
 		    <groupId>com.martiansoftware</groupId>
 		    <artifactId>jsap</artifactId>
@@ -89,6 +101,18 @@
 		</dependency>
 
 
+		<!-- SIMPLE NLG -->
+
+
+		<dependency>
+		    <groupId>uk.ac.abdn</groupId>
+		    <artifactId>SimpleNLG</artifactId>
+		    <version>4.4.8</version>
+		</dependency>
+
+
+
+
 		<!-- JSAP Dependency - Argument parser -->
 
 		<dependency>
@@ -140,7 +164,7 @@
 								<!-- add Main-Class to manifest file -->
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>br.uniriotec.ppgi.mapping.view.Main</mainClass>
+									<mainClass>br.uniriotec.bsi.view.Main</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
