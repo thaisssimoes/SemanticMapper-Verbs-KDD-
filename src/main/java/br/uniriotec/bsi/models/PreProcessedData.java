@@ -8,6 +8,19 @@ import java.util.*;
 
 import org.apache.commons.io.IOUtils;
 
+import simplenlg.features.Feature;
+import simplenlg.features.Tense;
+import simplenlg.framework.NLGFactory;
+import simplenlg.lexicon.Lexicon;
+import simplenlg.phrasespec.SPhraseSpec;
+import simplenlg.realiser.english.Realiser;
+
+import simplenlg.framework.*;
+import simplenlg.lexicon.*;
+import simplenlg.realiser.english.*;
+import simplenlg.phrasespec.*;
+import simplenlg.features.*;
+
 /**
  * Class that reads the preprocessed text file and retrieve the verbs
  * 
@@ -78,7 +91,7 @@ public class PreProcessedData {
 	
 	
 	/**
-	 * This method removes symbols, numbers and abbreviations in the set of verbs
+	 * This method removes symbols, numbers, not treated verbs and abbreviations in the set of verbs
 	 * 
 	 * @param Set of verbs previously removed from the preprocessed text from the Leo application
 	 * @return treated set of verbs
@@ -90,7 +103,11 @@ public class PreProcessedData {
 	 * */
 
 	public Set<String> removingStopwords(Set<String> setOfVerbs) throws ConcurrentModificationException{
-		String[] stopwords = {"\'re", "\'s", "\'t", "\'m", "\'d", "\'ve", "0", "_", ".", ",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", ""};
+		String[] stopwords = {"\'re", "\'s", "\'t", "\'m", "\'d", "\'ve", "0", "_", ".", 
+				",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", "", "scolded", "lying",
+				"peeped", "found", "occurred", "tired", "fitted", "knelt", "cheated", 
+				"brightned", "dozing", "hung", "pegs", "brightened", "is", "courtsey",
+				"would", "lit"};
 				
 		
 		for(Iterator<String> i = setOfVerbs.iterator(); i.hasNext();) {
@@ -104,6 +121,52 @@ public class PreProcessedData {
 
 	return setOfVerbs;
 	}
+	
+	/**
+	 * This method returns a set verbs from the preprocessed text in the infinitive form
+	 * 
+	 * @param set of verbs conjugated
+	 * @return set of verns in the infinitive form
+	 * 
+	 * TODO: figure it out how to treat some verbs: curtsey, will and to be (and the ones in stopword list)
+	 * 
+	 * */
+	
+	public Set<String> convertVerbsToBaseForm(Set<String> setOfVerbs){
+		Set<String> setOfVerbsInfinitiveForm = new HashSet<String>();
+		
+		/*Instanciate SimpleNLG objects*/
+		Lexicon lexicon = Lexicon.getDefaultLexicon();
+		NLGFactory nlgFactory = new NLGFactory(lexicon);
+		Realiser realiser = new Realiser(lexicon);
+		SPhraseSpec verb = nlgFactory.createClause();
+		
+		
+		for(String elementInOriginalSet : setOfVerbs) {
+			verb.setVerb(elementInOriginalSet);
+			verb.setFeature(Feature.FORM, Tense.PRESENT);
+			String verbInfinitive = realiser.realiseSentence(verb);
+			verbInfinitive = verbInfinitive.replace(".", ""); //removes a dot that comes with the method
+			setOfVerbsInfinitiveForm.add(verbInfinitive.toLowerCase());
+		}
+		
+		/**
+		 * Pequena gambiarra por enquanto ate segundo momento
+		 * Coloca os verbos que nao foram convertidos
+		 * */
+		setOfVerbsInfinitiveForm.add("be");
+		setOfVerbsInfinitiveForm.add("curtsy");
+		setOfVerbsInfinitiveForm.add("will");
+
+		
+		return removingStopwords(setOfVerbsInfinitiveForm);
+		
+	}
+	
+	/**
+	 * Pequena gambiarra por enquanto ate segundo momento
+	 * Coloca os verbos que nao foram convertidos e remove as outras formas.
+	 * */
 	
 	
 	
