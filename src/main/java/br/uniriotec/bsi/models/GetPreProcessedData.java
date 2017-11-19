@@ -36,16 +36,34 @@ public class GetPreProcessedData {
 				||(currentWord.equals("VBG"))
 				||(currentWord.equals("VBN"))
 				||(currentWord.equals("VBP"))) {
-				setOfVerbs.addAll(Arrays.asList(preProcessedTextRead.nextLine().split(" ")));
+				setOfVerbs.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
+//				System.out.println(setOfVerbs);
 			}		
 			
-		}
-		return setOfVerbs;
+		}		
+		return removingStopwords(setOfVerbs);
 		
 	}
 	
 
-	
+	public Set<String> removingStopwords(Set<String> setOfVerbs) throws ConcurrentModificationException{
+		String[] stopwords = {"\'re", "\'s", "\'t", "\'m", "\'d", "\'ve", "0", "_", ".", ",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", ""};
+				
+		
+		for(Iterator<String> i = setOfVerbs.iterator(); i.hasNext();) {
+			String elementInSet = i.next();
+			for (String elementInStopwords : stopwords) {
+				if(elementInSet.equals(elementInStopwords)) {
+					i.remove();
+										
+//					System.out.println("Opa cheguei aqui atraves do:" + elementInStopwords);
+				}
+			}			
+		}
+		System.out.println(setOfVerbs);
+
+	return setOfVerbs;
+	}
 	
 	
 	
