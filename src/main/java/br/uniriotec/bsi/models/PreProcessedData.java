@@ -163,11 +163,5 @@ public class PreProcessedData {
 		
 	}
 	
-	/**
-	 * Pequena gambiarra por enquanto ate segundo momento
-	 * Coloca os verbos que nao foram convertidos e remove as outras formas.
-	 * */
-	
-	
 	
 }

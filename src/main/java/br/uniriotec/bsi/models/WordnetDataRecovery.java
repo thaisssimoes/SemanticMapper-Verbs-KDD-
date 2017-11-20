@@ -21,30 +21,26 @@ import edu.mit.jwi.item.Word;
 
 public class WordnetDataRecovery {
 
+	/**
+	 * This method gets the Semantic Type of each verb supplied by wordnet and populate a hashmap with the verb [key] = semanticType [value]
+	 * 
+	 * @param Set of strings on the infinitive (must be in infinitive, otherwise wordnet will not read)
+	 * 
+	 * */
 	
-	public void getSupersense(Set<String> verbsInBaseForm) throws IOException{
-		ConstructWordnetDictionary newDictionary = new ConstructWordnetDictionary();   
-		IDictionary dict = newDictionary.getDictionary(); 
-		Map<String,ILexFile> supersense = new HashMap<String,ILexFile>();
+	public void getSemanticTypeOfVerbs(Set<String> verbsInInfinitiveForm) throws IOException{
+		ConstructWordnetDictionary newDictionary = new ConstructWordnetDictionary(); //constructs the wordnet dictionary  
+		IDictionary dict = newDictionary.getDictionary(); //opens the dictionary
+		
+		Map<String,String> supersense = new HashMap<String,String>();
  
-		for(String verb : verbsInBaseForm) {
-			IIndexWord idxWord = dict.getIndexWord(verb, POS.VERB); //look after the word
+		for(String currentVerb : verbsInInfinitiveForm) {
+			IIndexWord idxWord = dict.getIndexWord(currentVerb, POS.VERB); //get the ID of the word on WordNet
 			IWordID wordID = idxWord.getWordIDs().get(0); //get the meaning in a sentence
-		    IWord word = dict.getWord(wordID);
-		    ISynset synset = word.getSynset ();
-		    System.out.println("Lemma: "+ word.getLemma());
-		    System.out.println("SuperSense: "+ synset.getLexicalFile());
-
-		    System.out.println("Verb Frames: "+word.getVerbFrames());
-		    supersense.put(word.getLemma(), synset.getLexicalFile());
-		    
-			
+		    IWord word = dict.getWord(wordID); //get word on the dictionary by ID
+		    supersense.put(word.getLemma(),  String.valueOf(word.getVerbFrames()));		
 		}
-		    	    
-		    
-		    
-		System.out.println(supersense);
-		    
+		 	    		    
 	  }
 	
 

@@ -20,14 +20,9 @@ public class Main {
 		WordnetDataRecovery teste2 = new WordnetDataRecovery();
 		testandoConjunto=teste.convertVerbsToBaseForm(teste.getLabeledVerbs(preProcessedText));
 
+		teste2.getSemanticTypeOfVerbs(testandoConjunto);
 		
-		
-		teste2.getSupersense(testandoConjunto);
-//		System.out.println(teste.getLabeledVerbs(preProcessedText));
-
-		
-//		teste.getLabeledVerbs(preProcessedText);
-		
+	
 	}
 
 }
