@@ -13,6 +13,7 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		PreProcessedData teste = new PreProcessedData();
 		String preProcessedText = teste.readingPreProcessedText("/home/thais/Documentos/TCC/Leo/srlInputConll2008.tokens");
+		
 		Set<String> testandoConjunto = new HashSet<String>();
 		
 		

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>br.uniriotec.ppgi.mapping</groupId>
+  <groupId>br.uniriotec.bsi.mapping</groupId>
   <artifactId>SemanticMapper-Verbs</artifactId>
   <name>SemanticMapper-Verbs</name>
   <version>1.0.0-SNAPSHOT</version>
@@ -49,7 +49,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>br.uniriotec.ppgi.mapping.view.Main</mainClass>
+                  <mainClass>br.uniriotec.bsi.view.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
