@@ -3,11 +3,30 @@ package br.uniriotec.bsi.models;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import org.apache.commons.io.IOUtils;
 
+import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.process.CoreLabelTokenFactory;
+import edu.stanford.nlp.process.DocumentPreprocessor;
+import edu.stanford.nlp.process.PTBTokenizer;
+import edu.stanford.nlp.process.WordToSentenceProcessor;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import edu.stanford.nlp.util.CoreMap;
+import edu.stanford.nlp.util.StringUtils;
 import simplenlg.features.Feature;
 import simplenlg.features.Tense;
 import simplenlg.framework.NLGFactory;
@@ -106,7 +125,7 @@ public class PreProcessedData {
 		String[] stopwords = {"\'re", "\'s", "\'t", "\'m", "\'d", "\'ve", "0", "_", ".", 
 				",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", "", "scolded", "lying",
 				"peeped", "found", "occurred", "tired", "fitted", "knelt", "cheated", 
-				"brightned", "dozing", "hung", "pegs", "brightened", "is", "courtsey",
+				"brightned", "dozing", "hung", "pegs", "brightened", "is", "curtsey",
 				"would", "lit"};
 				
 		
@@ -121,6 +140,8 @@ public class PreProcessedData {
 
 	return setOfVerbs;
 	}
+	
+	
 	
 	/**
 	 * This method returns a set verbs from the preprocessed text in the infinitive form
@@ -146,22 +167,29 @@ public class PreProcessedData {
 			verb.setVerb(elementInOriginalSet);
 			verb.setFeature(Feature.FORM, Tense.PRESENT);
 			String verbInfinitive = realiser.realiseSentence(verb);
-			verbInfinitive = verbInfinitive.replace(".", ""); //removes a dot that comes with the method
+			verbInfinitive = verbInfinitive.replace(".", ""); //removes a dot that comes with the method		
+			mapsVerbsOriginalAndBaseForm(verbInfinitive, elementInOriginalSet);
 			setOfVerbsInfinitiveForm.add(verbInfinitive.toLowerCase());
+	
 		}
 		
-		/**
-		 * Pequena gambiarra por enquanto ate segundo momento
-		 * Coloca os verbos que nao foram convertidos
-		 * */
-		setOfVerbsInfinitiveForm.add("be");
-		setOfVerbsInfinitiveForm.add("curtsy");
-		setOfVerbsInfinitiveForm.add("will");
-
-		
 		return removingStopwords(setOfVerbsInfinitiveForm);
+
+	}
+	
+	public HashMap<String, String> mapsVerbsOriginalAndBaseForm(String verbBaseForm, String verbText){
+		
+		HashMap<String, String> mapOfVerbs = new HashMap<String,String>();		
+		mapOfVerbs.put(verbBaseForm, verbText);
+			
+		return mapOfVerbs;
 		
 	}
 	
-	
+	public void tokenizer(String text) {
+//		Document doc = new Document(text);
+//        List<Sentence> sentences = doc.sentences();
+//        sentences.stream().forEach(System.out::println);
+	}
+		
 }
