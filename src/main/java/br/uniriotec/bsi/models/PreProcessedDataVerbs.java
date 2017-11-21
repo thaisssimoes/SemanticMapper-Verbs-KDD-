@@ -8,6 +8,8 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import javax.crypto.MacSpi;
+
 import org.apache.commons.io.IOUtils;
 
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
@@ -48,8 +50,7 @@ import simplenlg.features.*;
  * 
  * */
 public class PreProcessedDataVerbs {
-	
-	
+		
 
 	/**
 	 * This method reads the preprocessed file, retrieves the verbs and put them into a set of verbs
@@ -82,6 +83,24 @@ public class PreProcessedDataVerbs {
 		
 	}
 	
+public Set<String> getLabeledVerbsGerund(String preProcessedText) {
+		
+		Scanner preProcessedTextRead = new Scanner(preProcessedText);
+		Set<String> setOfVerbs = new HashSet<String>();
+		
+		while(preProcessedTextRead.hasNext()) {
+			String currentWord = preProcessedTextRead.next();
+			
+			if (currentWord.equals("VBG")) {
+				setOfVerbs.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
+			}		
+			
+		}
+		preProcessedTextRead.close();
+		return setOfVerbs;
+		
+	}
+	
 	
 	/**
 	 * This method removes symbols, numbers, not treated verbs and abbreviations in the set of verbs
@@ -97,7 +116,7 @@ public class PreProcessedDataVerbs {
 
 	public Set<String> removingStopwords(Set<String> setOfVerbs) throws ConcurrentModificationException{
 		String[] stopwords = {"\'re", "\'s", "\'t", "\'m", "\'d", "\'ve", "0", "_", ".", 
-				",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", "", "presiding"};
+				",", "vb", "vbz", "vbd", "vbg", "vbn", "vbp", "", "presiding", "organizing"};
 				
 		
 		for(Iterator<String> i = setOfVerbs.iterator(); i.hasNext();) {
@@ -141,35 +160,17 @@ public class PreProcessedDataVerbs {
 			verbInfinitive = verbInfinitive.replace(".", ""); //removes a dot that comes with the method		
 			
 			if(verbInfinitive.equals("Is")) {
-				mapsVerbsOriginalAndBaseForm("Be", elementInOriginalSet);
 				setOfVerbsInfinitiveForm.add("be");
 			}
 			else {
-				mapsVerbsOriginalAndBaseForm(verbInfinitive, elementInOriginalSet);
 				setOfVerbsInfinitiveForm.add(verbInfinitive.toLowerCase());
-
+				
 			}
 
 		}		
 		return removingStopwords(setOfVerbsInfinitiveForm); 
 
 	}
-	/**
-	 * This method maps the verb infinitive form and its occurrence on the text
-	 * 
-	 * 
-	 * @param verbBaseForm
-	 * @param verbText
-	 * @return mapOfVerbs
-	 */
 	
-	public HashMap<String, String> mapsVerbsOriginalAndBaseForm(String verbBaseForm, String verbText){
-		
-		HashMap<String, String> mapOfVerbs = new HashMap<String,String>();		
-		mapOfVerbs.put(verbBaseForm, verbText);
-			
-		return mapOfVerbs;
-		
-	}
 
 }

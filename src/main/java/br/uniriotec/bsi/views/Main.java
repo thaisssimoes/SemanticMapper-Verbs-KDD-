@@ -1,12 +1,16 @@
 package br.uniriotec.bsi.views;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import br.uniriotec.bsi.models.PreProcessedDataOthers;
 import br.uniriotec.bsi.models.PreProcessedDataNouns;
 import br.uniriotec.bsi.models.PreProcessedDataVerbs;
 import br.uniriotec.bsi.models.TextProcessor;
@@ -23,28 +27,49 @@ public class Main {
 		String Alice = teste3.readingPreProcessedText("/home/thais/Documentos/TCC/Leo/conference_domain.txt");
 		PreProcessedDataNouns noun = new PreProcessedDataNouns();
 		List<String> sentencesList = teste3.tokenizer(Alice);				
-		Set<String> testandoConjuntoInfinitivo = new HashSet<String>();		
-		Set<String> testandoConjuntoConjugado = new HashSet<String>();		
+		Set<String> setOfVerbs = new HashSet<String>();		
+		Set<String> setOfNouns = new HashSet<String>();	
+		Set<String> setOfArt = new HashSet<String>();		
+		Set<String> setOfVerbsGerund = new HashSet<String>();		
 
+		PreProcessedDataOthers teste4 = new PreProcessedDataOthers();
 		WordnetDataRecovery teste2 = new WordnetDataRecovery();
-		HashMap<Integer, List<String>> mapOfSentencesAndVerbs = new HashMap<Integer, List<String>>();
+		HashMap<String, String> mapOfVerbs = new HashMap<String, String>();
+		setOfNouns = noun.getLabeledNouns(preProcessedText);
+		setOfVerbs=teste.getLabeledVerbs(preProcessedText);
+		setOfVerbsGerund=teste.getLabeledVerbsGerund(preProcessedText);
 
-		testandoConjuntoConjugado = teste.getLabeledVerbs(preProcessedText);
-		testandoConjuntoInfinitivo=teste.convertVerbsToBaseForm(teste.getLabeledVerbs(preProcessedText));
-		
+		teste.getLabeledVerbs(preProcessedText);
+		AnalyzingSentences syntax = new AnalyzingSentences();
 
-		AnalyzingSentences blah = new AnalyzingSentences();
-		List<Verb> stateVerb;
 		
-		stateVerb= blah.stateVerbs(sentencesList, testandoConjuntoConjugado);
 		
-		for(Verb verb : stateVerb) {
-			System.out.print(verb.getVerbBaseForm()+ "\n");
-			System.out.print(verb.getVerbFromText() + "\n\n");
+		Verb verb;
+		setOfArt = teste4.getLabeledArticle(preProcessedText);
+		for(String sentence : sentencesList) {
+//			System.out.print(setOfVerbs);
+//
+//			System.out.print("Subject: "+verb.getSubject()+ "\n");
+//			System.out.print("Verb: "+verb.getVerbFromText()+ "\n");
+
+//			System.out.print("Complement: "+verb.getComplement()+ "\n");
+			
+//				System.out.print(blah.splitFromVerbs(sentence, setOfVerbs)[0]);
+			
+			
 		}
+		PrintWriter writer = new PrintWriter("/home/thais/Documentos/TCC/SemanticMapper-Verbs/syntax.txt", "UTF-8");
 		
+            for(String sentence : sentencesList) {
+    			verb=syntax.joinAnalysis(sentence, setOfNouns, setOfVerbs, setOfArt, setOfVerbsGerund);
+            	writer.println("Sentence: "+sentence);
+            	writer.println("Subject: "+verb.getSubject());
+            	writer.println("Verb: "+verb.getVerbFromText()+ "\n");
 
-	
+            }
+            writer.close();
+            
+        	
 	}
 
 }

@@ -47,43 +47,100 @@ import simplenlg.features.*;
  * 
  * 
  * */
-public class PreProcessedDataNouns {
+public class PreProcessedDataOthers {
 	
 	
 
 	/**
-	 * This method reads the preprocessed file, retrieves the nouns and put them into a set of nouns
+	 * This method reads the preprocessed file, retrieves the articles and put them into a set of articles
 	 * 
 	 * @param preProcessed Text
 	 * @return set of nouns from the preprocessed document
 	 * 
 	 * */
 	
-	public Set<String> getLabeledNouns(String preProcessedText) {
+	public Set<String> getLabeledArticle(String preProcessedText) {
 		
 		Scanner preProcessedTextRead = new Scanner(preProcessedText);
-		Set<String> setOfNouns = new HashSet<String>();
+		Set<String> setOfArt = new HashSet<String>();
 		
 		while(preProcessedTextRead.hasNext()) {
 			String currentWord = preProcessedTextRead.next();
 			
-			if ((currentWord.equals("NNP"))
-				||(currentWord.equals("NN"))
-				||(currentWord.equals("NNS"))
-				||(currentWord.equals("NNPS"))) {
-				setOfNouns.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
+			if ((currentWord.equals("DT"))) {
+				setOfArt.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
 			}		
 			
 		}
 		preProcessedTextRead.close();
 		
-		return removingStopwords(setOfNouns);
+		return removingStopwords(setOfArt);
+		
+	}
+	
+	/**
+	 * This method reads the preprocessed file, retrieves the others 
+	 * (i.e. prepositions and conjuctions) and put them into a set of words
+	 * 
+	 * @param preProcessed Text
+	 * @return set of nouns from the preprocessed document
+	 * 
+	 * */
+	
+	public Set<String> getLabeledOthers(String preProcessedText) {
+		
+		Scanner preProcessedTextRead = new Scanner(preProcessedText);
+		Set<String> setOfArt = new HashSet<String>();
+		
+		while(preProcessedTextRead.hasNext()) {
+			String currentWord = preProcessedTextRead.next();
+			
+			if ((currentWord.equals("RB"))
+				|| currentWord.equals("IN") ) {
+				setOfArt.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
+			}		
+			
+		}
+		preProcessedTextRead.close();
+		
+		return removingStopwords(setOfArt);
+		
+	}
+	
+	
+	
+	/**
+	 * This method reads the preprocessed file, retrieves the Adjectives and put them into a set of Adjectives
+	 * 
+	 * @param preProcessed Text
+	 * @return set of nouns from the preprocessed document
+	 * 
+	 * */
+	
+	public Set<String> getLabeledAdj(String preProcessedText) {
+		
+		Scanner preProcessedTextRead = new Scanner(preProcessedText);
+		Set<String> setOfAdj = new HashSet<String>();
+		
+		while(preProcessedTextRead.hasNext()) {
+			String currentWord = preProcessedTextRead.next();
+			
+			if ((currentWord.equals("JJ"))
+				||(currentWord.equals("JJN"))
+				||(currentWord.equals("JJS"))) {
+				setOfAdj.addAll(Arrays.asList(preProcessedTextRead.nextLine().toLowerCase().split(" ")));
+			}		
+			
+		}
+		preProcessedTextRead.close();
+		
+		return removingStopwords(setOfAdj);
 		
 	}
 	
 	
 	/**
-	 * This method removes symbols, numbers, not treated nouns and abbreviations in the set of nouns
+	 * This method removes symbols, numbers, not treated nouns and abbreviations in a variation of sets
 	 * 
 	 * @param Set of nouns previously removed from the preprocessed text from the Leo application
 	 * @return treated set of nouns
@@ -95,7 +152,7 @@ public class PreProcessedDataNouns {
 	 * */
 
 	public Set<String> removingStopwords(Set<String> setOfNouns) throws ConcurrentModificationException{
-		String[] stopwords = { "0", "_", ".", ",", "nn", "nnp", "nns", "nnps",  "", "dt", "reviews", "its"};
+		String[] stopwords = { "0", "_", ".", ",", "jj", "jjs", "jjn", "", "rb", "in"};
 				
 		
 		for(Iterator<String> i = setOfNouns.iterator(); i.hasNext();) {

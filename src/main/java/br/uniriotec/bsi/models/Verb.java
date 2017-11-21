@@ -32,7 +32,7 @@ public class Verb {
 		return this.subject;
 	}
 	
-	public void setVerbSupersense(String subject) {
+	public void setSubject(String subject) {
 		this.subject = subject;
 
 	}

@@ -1,0 +1,32 @@
+Sentence: An organizing committee is composed by committee members and is responsible for organizing the conference.
+Subject:  organizing committee
+Verb: composed
+
+Sentence: The presiding member of the organizing committee is the chair, who publishes the conference.
+Subject:  presiding member organizing committee
+Verb: is
+
+Sentence: Authors submit papers, which are received by committee members and distributed by them among reviewers.
+Subject: authors
+Verb: submit
+
+Sentence: Reviewers conduct reviews and recommend which papers should be accepted.
+Subject: reviewers
+Verb: conduct
+
+Sentence: A paper can have three different stages during its lifecycle.
+Subject:  paper
+Verb: have
+
+Sentence: Before reviews a paper is marked as a not evaluated paper.
+Subject:  paper
+Verb: marked
+
+Sentence: Once revisions are done, a paper becomes either an accepted paper or a rejected paper.
+Subject:  revisions
+Verb: are
+
+Sentence: Presentations are prepared based on accepted papers only.
+Subject:  presentations
+Verb: prepared
+

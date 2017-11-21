@@ -24,6 +24,14 @@ import edu.mit.jwi.item.POS;
 import edu.mit.jwi.item.Word;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
+/**
+ * 
+ * This class recovers data from wordnet
+ * 
+ * @author Thaïs Simões
+ * 
+ * */
+
 public class WordnetDataRecovery {
 
 	/**
@@ -54,10 +62,12 @@ public class WordnetDataRecovery {
 	
 
 	
-	
-	
-	
-	
+	/**
+	 * This method gets the supersense of every verb on the setList
+	 * 
+	 * @param set of verbs
+	 * 
+	 * */
 	
 	
 	public HashMap<String,ILexFile> getSupersense(Set<String> verbsInInfinitiveForm) throws IOException{
