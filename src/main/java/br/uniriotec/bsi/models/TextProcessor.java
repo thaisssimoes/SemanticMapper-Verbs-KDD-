@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -83,22 +84,24 @@ public class TextProcessor {
 	}
 	
 
-	public HashMap<String, List<String>> getVerbsFromSentence(List<String> sentencesList, Set<String> setOfVerbs){
-		HashMap<String, List<String>> mapOfSentencesAndVerbs = new HashMap<String, List<String>>();
+	public HashMap<Integer, List<String>> getVerbsFromSentence(List<String> sentencesList, Set<String> setOfVerbs){
+		HashMap<Integer, List<String>> mapOfSentencesAndVerbs = new HashMap<Integer, List<String>>();
 		List<String> listOfVerbs = new ArrayList<String>();
+		int i =0;
 		
-//		for (int i=0; i< sentencesList.size(); i++) {
-//			for (String verb : setOfVerbs)
-//				for(String sentence : sentencesList) {
-//					if(sentence.contains(verb));
-//					listOfVerbs.add(verb);
-//			}
-//			
-//			mapOfSentencesAndVerbs.put("Frase "+i+ ": " , listOfVerbs);
-//		}
-							
+		for(String sentence : sentencesList) {
+			for(String verb : setOfVerbs) {
+				if(sentence.contains(verb)) {
+					listOfVerbs.add(verb);
+				}
+			}
+			mapOfSentencesAndVerbs.put(i, listOfVerbs);
+			i++;
+		}
+						
 		return mapOfSentencesAndVerbs;
 	}
 	
+
 	
 }

@@ -41,7 +41,7 @@ import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
 /**
- * Class that reads the preprocessed text file and retrieve the verbs
+ * Class retrieves the nouns from a preprocessed file
  * 
  *  @author Thaïs Simões
  * 
@@ -52,10 +52,10 @@ public class PreProcessedDataNouns {
 	
 
 	/**
-	 * This method reads the preprocessed file, retrieves the verbs and put them into a set of verbs
+	 * This method reads the preprocessed file, retrieves the nouns and put them into a set of nouns
 	 * 
 	 * @param preProcessed Text
-	 * @return set of verbs from the preprocessed document
+	 * @return set of nouns from the preprocessed document
 	 * 
 	 * */
 	
@@ -83,10 +83,10 @@ public class PreProcessedDataNouns {
 	
 	
 	/**
-	 * This method removes symbols, numbers, not treated verbs and abbreviations in the set of verbs
+	 * This method removes symbols, numbers, not treated nouns and abbreviations in the set of nouns
 	 * 
-	 * @param Set of verbs previously removed from the preprocessed text from the Leo application
-	 * @return treated set of verbs
+	 * @param Set of nouns previously removed from the preprocessed text from the Leo application
+	 * @return treated set of nouns
 	 * 
 	 * @throws ConcurrentModificationException
 	 * 
@@ -95,7 +95,8 @@ public class PreProcessedDataNouns {
 	 * */
 
 	public Set<String> removingStopwords(Set<String> setOfNouns) throws ConcurrentModificationException{
-		String[] stopwords = { "0", "_", ".", ",", "nn", "nnp", "nns", "nnps",  "",};
+		String[] stopwords = { "0", "_", ".", ",", "nn", "nnp", "nns", "nnps",  "", "among", "and",
+								"an", "which", "who", "the", "its", "a"};
 				
 		
 		for(Iterator<String> i = setOfNouns.iterator(); i.hasNext();) {
